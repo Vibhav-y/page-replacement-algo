@@ -11,95 +11,86 @@
 </head>
 
 <body>
-    <div class="wrapper">
-        <div class="container">
+      <div class="wrapper">
+         <div class="container">
             <div class="header">
-                <h2>🔄 Page Replacement Simulator</h2>
-                <p>Interactive simulation of FIFO, LRU, & Optimal algorithms</p>
+               <h2>🔄 Page Replacement Simulator</h2>
+               <p>Interactive simulation of FIFO, LRU, & Optimal algorithms</p>
             </div>
-            <div class="form-section"> <label for="pages">Reference String (comma-separated):</label> <input type="text" id="pages" placeholder="e.g., 7, 0, 1, 2, 0, 3, 4, 2, 3, 0" />
-                <label for="frames">Number of Frames:</label>
-                <input type="number" id="frames" min="1" value="3" />
-
-                <label for="algorithm">Select Algorithm:</label>
-                <select id="algorithm">
-                    <option value="FIFO">FIFO (First-In, First-Out)</option>
-                    <option value="LRU">LRU (Least Recently Used)</option>
-                    <option value="Optimal">Optimal Page Replacement</option>
-                </select>
-                <button class="submit-btn" onclick="runSimulation()">Run Simulation</button>
+            <div>
+               <label for="pages">Reference String (comma-separated):</label> <input type="text" id="pages" placeholder="e.g., 7, 0, 1, 2, 0, 3, 4, 2, 3, 0" /> <label for="frames">Number of Frames:</label> <input type="number" id="frames" min="1" value="3" /> <label for="algorithm">Select Algorithm:</label> 
+               <select id="algorithm">
+                  <option value="FIFO">FIFO (First-In, First-Out)</option>
+                  <option value="LRU">LRU (Least Recently Used)</option>
+                  <option value="Optimal">Optimal Page Replacement</option>
+               </select>
+               <button class="submit-btn" onclick="runSimulation()"> Run Simulation </button> 
             </div>
-
             <div class="result" id="output" style="display:none;">
-                <h3>📊 Results</h3>
-                <p><strong>Page Faults:</strong> <span id="faults"></span></p>
-                <p><strong>Page Hits:</strong> <span id="hits"></span></p>
-                <p>
-                    <strong>Hit Ratio:</strong>
-                    <span id="ratio"></span>%
-                </p>
-                <h4>📌 Step-by-Step Execution:</h4>
-                <div id="steps-container" class="steps-container"></div>
+               <h3>📊 Results</h3>
+               <p><strong>Page Faults:</strong> <span id="faults"></span></p>
+               <p><strong>Page Hits:</strong> <span id="hits"></span></p>
+               <p> <strong>Hit Ratio:</strong> <span id="ratio"></span>% </p>
+               <h4>📌 Step-by-Step Execution:</h4>
+               <div id="steps-container" class="steps-container"></div>
             </div>
-        </div>
-
-        <!-- Explanation Side Panel -->
-        <div class="side-panel">
+         </div>
+         <div class="side-panel">
             <h3>Page Replacement Algorithms: LRU, Optimal, FIFO</h3>
             <p>
-                In modern operating systems, virtual memory allows a system to run programs exceeding the physical memory (RAM) size.
-                Virtual memory is implemented through paging, where a process’s address space is divided into fixed-size pages that are loaded into frames as needed.
-                When memory is full, a decision is made about which page to remove using page replacement algorithms.
+               In modern operating systems, virtual memory allows a system to run programs exceeding the physical memory (RAM) size.
+               Virtual memory is implemented through paging, where a process’s address space is divided into fixed-size pages that are loaded into frames as needed.
+               When memory is full, a decision is made about which page to remove using page replacement algorithms.
             </p>
             <h4>Real Life Analogy</h4>
             <p>
-                Imagine you have a small bookshelf with limited space. When you get a new book and the shelf is full,
-                you must decide which book to remove. Page replacement algorithms solve a similar problem for the operating system.
+               Imagine you have a small bookshelf with limited space. When you get a new book and the shelf is full,
+               you must decide which book to remove. Page replacement algorithms solve a similar problem for the operating system.
             </p>
             <h4>Algorithms Overview</h4>
             <ul>
-                <li><strong>FIFO:</strong> Removes the oldest page in memory.</li>
-                <li><strong>LRU:</strong> Replaces the least recently used page.</li>
-                <li><strong>Optimal:</strong> Removes the page that will not be needed for the longest period in the future.</li>
+               <li><strong>FIFO:</strong> Removes the oldest page in memory.</li>
+               <li><strong>LRU:</strong> Replaces the least recently used page.</li>
+               <li><strong>Optimal:</strong> Removes the page that will not be needed for the longest period in the future.</li>
             </ul>
             <h4>More Details</h4>
             <h5>1. FIFO</h5>
             <p>
-                FIFO maintains a queue of pages. When a new page is needed and memory is full, the oldest page is removed.
+               FIFO maintains a queue of pages. When a new page is needed and memory is full, the oldest page is removed.
             </p>
             <ul>
-                <li><em>Advantages:</em> Simple and easy to implement.</li>
-                <li><em>Disadvantages:</em> May remove a frequently used page (Belady’s anomaly).</li>
+               <li><em>Advantages:</em> Simple and easy to implement.</li>
+               <li><em>Disadvantages:</em> May remove a frequently used page (Belady’s anomaly).</li>
             </ul>
             <h5>2. LRU</h5>
             <p>
-                LRU evicts the page not used for the longest time, assuming recently used pages are likely to be used again.
+               LRU evicts the page not used for the longest time, assuming recently used pages are likely to be used again.
             </p>
             <ul>
-                <li><em>Advantages:</em> Generally performs well in practice.</li>
-                <li><em>Disadvantages:</em> Requires extra overhead to track page usage.</li>
+               <li><em>Advantages:</em> Generally performs well in practice.</li>
+               <li><em>Disadvantages:</em> Requires extra overhead to track page usage.</li>
             </ul>
             <h5>3. Optimal</h5>
             <p>
-                Optimal predicts which page won’t be needed for the longest time in the future, resulting in the fewest page faults.
+               Optimal predicts which page won’t be needed for the longest time in the future, resulting in the fewest page faults.
             </p>
             <ul>
-                <li><em>Advantages:</em> The best theoretical performance.</li>
-                <li><em>Disadvantages:</em> Requires future knowledge of page requests, making it impractical.</li>
+               <li><em>Advantages:</em> The best theoretical performance.</li>
+               <li><em>Disadvantages:</em> Requires future knowledge of page requests, making it impractical.</li>
             </ul>
             <h4>Summary</h4>
             <p>
-                <strong>FIFO:</strong> Simple but may not be efficient.<br />
-                <strong>LRU:</strong> Approximates optimal performance but with extra bookkeeping.<br />
-                <strong>Optimal:</strong> Perfect in theory, but not practical.
+               <strong>FIFO:</strong> Simple but may not be efficient.<br />
+               <strong>LRU:</strong> Approximates optimal performance but with extra bookkeeping.<br />
+               <strong>Optimal:</strong> Perfect in theory, but not practical.
             </p>
             <h4>Key Terms</h4>
             <p>
-                <strong>Page Fault:</strong> Occurs when a requested page is not in memory.<br />
-                <strong>Page Hit:</strong> Occurs when a requested page is already loaded in memory.<br />
-                <strong>Hit Ratio:</strong> <code>(Hits / Total Requests) × 100%</code>
+               <strong>Page Fault:</strong> Occurs when a requested page is not in memory.<br />
+               <strong>Page Hit:</strong> Occurs when a requested page is already loaded in memory.<br />
+               <strong>Hit Ratio:</strong> <code>(Hits / Total Requests) × 100%</code>
             </p>
-        </div>
+         </div>
     </div>
     <script src="sc.js"></script>
 </body>
