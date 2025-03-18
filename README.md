@@ -56,6 +56,7 @@ Enter a sequence of page numbers (e.g., `7, 0, 1, 2, 0, 3, 4, 2, 3, 0`).
 The project is organized into the following files:
 
 page-replacement-simulator
+
     |── index.html      # Main HTML file containing the structure and content of the web app.
     ├── style.css       # External CSS file for styling and responsive design.
     ├── sc.js           # JavaScript file with simulation logic, event handlers, and algorithm implementations.
