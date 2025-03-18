@@ -1,0 +1,77 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8" /> <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <title>Page Replacement Simulator</title> <link rel="preconnect" href="https://fonts.googleapis.com"> <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"> <style> /* Global Styles */ * { box-sizing: border-box; } body { font-family: 'Roboto', sans-serif; margin: 0; padding: 0; background: linear-gradient(135deg, #f5f7fa, #c3cfe2); color: #333; display: flex; min-height: 100vh; } h2, h3, h4, h5 { margin: 0; padding: 0; } /* Layout Containers */ .wrapper { display: flex; flex-direction: row; width: 100%; max-width: 1200px; margin: 0 auto; padding: 20px; gap: 20px; } .container, .side-panel { background: #fff; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); padding: 20px; } .container { flex: 2; } .side-panel { flex: 1; overflow-y: auto; max-height: calc(100vh - 40px); } /* Header */ .header { text-align: center; margin-bottom: 20px; } .header h2 { font-size: 1.8rem; color: #1d4ed8; margin-bottom: 10px; } /* Form Elements */ label { color: #555; margin-bottom: 5px; display: block; font-weight: 500; } input[type="text"], input[type="number"], select { width: 100%; padding: 10px; font-size: 1rem; border: 1px solid #ccc; border-radius: 4px; margin-bottom: 15px; transition: border-color 0.2s ease; } input[type="text"]:focus, input[type="number"]:focus, select:focus { border-color: #1d4ed8; outline: none; } .submit-btn { background: #1d4ed8; color: white; border: none; padding: 12px 20px; font-size: 1rem; border-radius: 4px; cursor: pointer; transition: background 0.3s ease; width: 100%; } .submit-btn:hover { background: #163c9e; } /* Results */ .result { margin-top: 20px; padding: 20px; border-radius: 8px; background: #fff; box-shadow: 0 4px 8px rgba(0,0,0,0.08); } .result h3 { color: #1d4ed8; margin-bottom: 10px; } .result p { font-size: 1rem; margin: 5px 0; } .result code { background: #eef6ff; padding: 2px 4px; border-radius: 4px; } /* Step-by-Step List */ .steps-container { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; } .step { display: flex; align-items: center; padding: 10px; background: #fafafa; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); animation: fadeIn 0.3s ease-in-out; } @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } } .step-number { width: 80px; font-weight: 700; color: #1d4ed8; } .frame-box { border: 2px solid #ddd; padding: 10px; width: 45px; text-align: center; font-weight: bold; margin-right: 5px; border-radius: 6px; transition: transform 0.2s ease-in-out; } .hit { background-color: #4caf50; color: #fff; transform: scale(1.05); } .miss { background-color: #e53935; color: #fff; transform: scale(1.05); } .explanation { flex-grow: 1; font-size: 0.95rem; margin-left: 10px; color: #555; } /* Side Panel Content */ .side-panel h3 { font-size: 1.4rem; color: #1d4ed8; margin-bottom: 15px; } .side-panel h4 { margin-top: 15px; font-size: 1.1rem; color: #333; } .side-panel p, .side-panel li { line-height: 1.6; font-size: 0.95rem; color: #555; } .side-panel ul { padding-left: 20px; margin: 10px 0; } /* Responsive Layout */ @media (max-width: 900px) { .wrapper { flex-direction: column; } .side-panel { max-height: none; } } </style> </head> <body> <div class="wrapper"> <div class="container"> <div class="header"> <h2>🔄 Page Replacement Simulator</h2> <p>Interactive simulation of FIFO, LRU, & Optimal algorithms</p> </div> <div> <label for="pages">Reference String (comma-separated):</label> <input type="text" id="pages" placeholder="e.g., 7, 0, 1, 2, 0, 3, 4, 2, 3, 0">
+    <label for="frames">Number of Frames:</label>
+    <input type="number" id="frames" min="1" value="3">
+    
+    <label for="algorithm">Select Algorithm:</label>
+    <select id="algorithm">
+      <option value="FIFO">FIFO (First-In, First-Out)</option>
+      <option value="LRU">LRU (Least Recently Used)</option>
+      <option value="Optimal">Optimal Page Replacement</option>
+    </select>
+    <button class="submit-btn" onclick="runSimulation()">Run Simulation</button>
+  </div>
+  
+  <div class="result" id="output" style="display:none;">
+    <h3>📊 Results</h3>
+    <p><strong>Page Faults:</strong> <span id="faults"></span></p>
+    <p><strong>Page Hits:</strong> <span id="hits"></span></p>
+    <p><strong>Hit Ratio:</strong> <span id="ratio"></span>%</p>
+    <h4>📌 Step-by-Step Execution:</h4>
+    <div id="steps-container" class="steps-container"></div>
+  </div>
+</div>
+
+<div class="side-panel">
+  <h3>Page Replacement Algorithms: LRU, Optimal, FIFO</h3>
+  <p>
+    In modern operating systems, virtual memory allows a system to run programs exceeding the physical memory (RAM) size. Virtual memory is implemented through paging, where a process’s address space is divided into fixed-size pages that are loaded into frames as needed. When memory is full, a decision is made about which page to remove using page replacement algorithms.
+  </p>
+  <h4>Real Life Analogy</h4>
+  <p>
+    Imagine you have a small bookshelf with limited space. When you get a new book and the shelf is full, you must decide which book to remove. Page replacement algorithms solve a similar problem for the operating system.
+  </p>
+  <h4>Algorithms Overview</h4>
+  <ul>
+    <li><strong>FIFO:</strong> Removes the oldest page in memory.</li>
+    <li><strong>LRU:</strong> Replaces the least recently used page.</li>
+    <li><strong>Optimal:</strong> Removes the page that will not be needed for the longest period in the future.</li>
+  </ul>
+  <h4>More Details</h4>
+  <h5>1. FIFO</h5>
+  <p>
+    FIFO maintains a queue of pages. When a new page is needed and memory is full, the oldest page is removed.
+  </p>
+  <ul>
+    <li><em>Advantages:</em> Simple and easy to implement.</li>
+    <li><em>Disadvantages:</em> May remove a frequently used page (Belady’s anomaly).</li>
+  </ul>
+  <h5>2. LRU</h5>
+  <p>
+    LRU evicts the page not used for the longest time, assuming recently used pages are likely to be used again.
+  </p>
+  <ul>
+    <li><em>Advantages:</em> Generally performs well in practice.</li>
+    <li><em>Disadvantages:</em> Requires extra overhead to track page usage.</li>
+  </ul>
+  <h5>3. Optimal</h5>
+  <p>
+    Optimal predicts which page won’t be needed for the longest time in the future, resulting in the fewest page faults.
+  </p>
+  <ul>
+    <li><em>Advantages:</em> The best theoretical performance.</li>
+    <li><em>Disadvantages:</em> Requires future knowledge of page requests, making it impractical.</li>
+  </ul>
+  <h4>Summary</h4>
+  <p>
+    <strong>FIFO:</strong> Simple but may not be efficient.<br>
+    <strong>LRU:</strong> Approximates optimal performance but with extra bookkeeping.<br>
+    <strong>Optimal:</strong> Perfect in theory, but not practical.
+  </p>
+  <h4>Key Terms</h4>
+  <p>
+    <strong>Page Fault:</strong> Occurs when a requested page is not in memory.<br>
+    <strong>Page Hit:</strong> Occurs when a requested page is already loaded in memory.<br>
+    <strong>Hit Ratio:</strong> <code>(Hits / Total Requests) × 100%</code>
+  </p>
+</div>
+</div> <script> function runSimulation() { let pages = document.getElementById("pages").value.split(",").map(p => parseInt(p.trim())); let frames = parseInt(document.getElementById("frames").value); let algorithm = document.getElementById("algorithm").value; if (!pages.length || isNaN(frames) || frames < 1) { alert("Please enter valid input!"); return; } let result; if (algorithm === "FIFO") result = fifo(pages, frames); else if (algorithm === "LRU") result = lru(pages, frames); else if (algorithm === "Optimal") result = optimal(pages, frames); document.getElementById("faults").innerText = result.faults; document.getElementById("hits").innerText = result.hits; document.getElementById("ratio").innerText = ((result.hits / pages.length) * 100).toFixed(2); document.getElementById("steps-container").innerHTML = result.steps; document.getElementById("output").style.display = "block"; } function fifo(pages, frames) { let queue = [], faults = 0, hits = 0, steps = ""; pages.forEach((page, index) => { let isHit = queue.includes(page); if (!isHit) { if (queue.length < frames) { queue.push(page); } else { queue.shift(); queue.push(page); } faults++; } else { hits++; } steps += renderStep(index + 1, queue, isHit, page, "FIFO"); }); return { faults, hits, steps }; } function lru(pages, frames) { let memory = []; let faults = 0, hits = 0, steps = ""; pages.forEach((page, index) => { let foundIndex = memory.findIndex(item => item.value === page); if(foundIndex === -1) { faults++; if(memory.length === frames) { memory.shift(); } memory.push({value: page, time: index}); } else { hits++; memory.splice(foundIndex, 1); memory.push({value: page, time: index}); } steps += renderStep(index + 1, memory.map(item => item.value), foundIndex !== -1, page, "LRU"); }); return { faults, hits, steps }; } function optimal(pages, frames) { let memory = []; let faults = 0, hits = 0, steps = ""; for(let i = 0; i < pages.length; i++){ let page = pages[i]; if(memory.includes(page)){ hits++; steps += renderStep(i + 1, memory, true, page, "Optimal"); continue; } faults++; if(memory.length < frames){ memory.push(page); } else { let indexToReplace = -1; let farthestUse = -1; memory.forEach((mPage, idx) => { let nextUse = pages.slice(i+1).indexOf(mPage); if(nextUse === -1) { indexToReplace = idx; return; } if (nextUse > farthestUse) { farthestUse = nextUse; indexToReplace = idx; } }); memory[indexToReplace] = page; } steps += renderStep(i + 1, memory, false, page, "Optimal"); } return { faults, hits, steps }; } function renderStep(step, currentMemory, isHit, page, algorithm) { return ` <div class="step"> <div class="step-number">Step ${step}:</div> ${currentMemory.map(p => `<div class="frame-box ${isHit ? 'hit' : 'miss'}">${p}</div>`).join("")} <div class="explanation">Page ${page} ${isHit ? "was a hit" : "caused a fault"} (${algorithm}).</div> </div> `; } </script> </body> </html>
