@@ -1,7 +1,10 @@
 function runSimulation() {
-    let pages = document.getElementById("pages").value.split(",").map(p => parseInt(p.trim()));
+    let pages = document.getElementById("pages").value
+        .split(",")
+        .map(p => parseInt(p.trim()));
     let frames = parseInt(document.getElementById("frames").value);
     let algorithm = document.getElementById("algorithm").value;
+
     if (!pages.length || isNaN(frames) || frames < 1) {
         alert("Please enter valid input!");
         return;
@@ -10,6 +13,7 @@ function runSimulation() {
     if (algorithm === "FIFO") result = fifo(pages, frames);
     else if (algorithm === "LRU") result = lru(pages, frames);
     else if (algorithm === "Optimal") result = optimal(pages, frames);
+
     document.getElementById("faults").innerText = result.faults;
     document.getElementById("hits").innerText = result.hits;
     document.getElementById("ratio").innerText = ((result.hits / pages.length) * 100).toFixed(2);
@@ -45,8 +49,8 @@ function fifo(pages, frames) {
 }
 
 function lru(pages, frames) {
-    let memory = [];
-    let faults = 0,
+    let memory = [],
+        faults = 0,
         hits = 0,
         steps = "";
     pages.forEach((page, index) => {
@@ -68,7 +72,13 @@ function lru(pages, frames) {
                 time: index
             });
         }
-        steps += renderStep(index + 1, memory.map(item => item.value), foundIndex !== -1, page, "LRU");
+        steps += renderStep(
+            index + 1,
+            memory.map(item => item.value),
+            foundIndex !== -1,
+            page,
+            "LRU"
+        );
     });
     return {
         faults,
@@ -78,8 +88,8 @@ function lru(pages, frames) {
 }
 
 function optimal(pages, frames) {
-    let memory = [];
-    let faults = 0,
+    let memory = [],
+        faults = 0,
         hits = 0,
         steps = "";
     for (let i = 0; i < pages.length; i++) {
@@ -93,8 +103,8 @@ function optimal(pages, frames) {
         if (memory.length < frames) {
             memory.push(page);
         } else {
-            let indexToReplace = -1;
-            let farthestUse = -1;
+            let indexToReplace = -1,
+                farthestUse = -1;
             memory.forEach((mPage, idx) => {
                 let nextUse = pages.slice(i + 1).indexOf(mPage);
                 if (nextUse === -1) {
@@ -118,5 +128,10 @@ function optimal(pages, frames) {
 }
 
 function renderStep(step, currentMemory, isHit, page, algorithm) {
-    return ` <div class="step"> <div class="step-number">Step ${step}:</div> ${currentMemory.map(p => `<div class="frame-box ${isHit ? 'hit' : 'miss'}">${p}</div>`).join("")} <div class="explanation">Page ${page} ${isHit ? "was a hit" : "caused a fault"} (${algorithm}).</div> </div> `;
+    return `
+             <div class="step">
+               <div class="step-number">Step ${step}:</div>
+               ${currentMemory.map(p => `<div class="frame-box ${isHit ? 'hit' : 'miss'}">${p}</div>`).join('')}
+               <div class="explanation">Page ${page} ${isHit ? "was a hit" : "caused a fault"} (${algorithm}).</div>
+             </div>`;
 }
