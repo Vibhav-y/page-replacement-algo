@@ -1,6 +1,7 @@
 function runSimulation() {
-    let pages = document.getElementById("pages").value
-        .split(",")
+    let pages = document
+        .getElementById("pages")
+        .value.split(",")
         .map(p => parseInt(p.trim()));
     let frames = parseInt(document.getElementById("frames").value);
     let algorithm = document.getElementById("algorithm").value;
@@ -9,6 +10,7 @@ function runSimulation() {
         alert("Please enter valid input!");
         return;
     }
+
     let result;
     if (algorithm === "FIFO") result = fifo(pages, frames);
     else if (algorithm === "LRU") result = lru(pages, frames);
@@ -72,13 +74,7 @@ function lru(pages, frames) {
                 time: index
             });
         }
-        steps += renderStep(
-            index + 1,
-            memory.map(item => item.value),
-            foundIndex !== -1,
-            page,
-            "LRU"
-        );
+        steps += renderStep(index + 1, memory.map(item => item.value), foundIndex !== -1, page, "LRU");
     });
     return {
         faults,
@@ -128,10 +124,15 @@ function optimal(pages, frames) {
 }
 
 function renderStep(step, currentMemory, isHit, page, algorithm) {
-    return `
-             <div class="step">
-               <div class="step-number">Step ${step}:</div>
-               ${currentMemory.map(p => `<div class="frame-box ${isHit ? 'hit' : 'miss'}">${p}</div>`).join('')}
-               <div class="explanation">Page ${page} ${isHit ? "was a hit" : "caused a fault"} (${algorithm}).</div>
-             </div>`;
+    return < div class = "step" > < div class = "step-number" > Step $ {
+        step
+    }: < /div>       ${currentMemory.map(p =><div class="frame-box ${isHit ? "hit" : "miss"}">${p}</div > ).join('')
+} < div class = "explanation" > Page $ {
+    page
+}
+$ {
+    isHit ? "was a hit" : "caused a fault"
+}($ {
+    algorithm
+}). < /div>     </div > ;
 }
