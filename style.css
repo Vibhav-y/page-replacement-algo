@@ -1,3 +1,4 @@
+/* Global Styles */
 * {
 	box-sizing: border-box;
 }
@@ -9,6 +10,7 @@ body {
 	background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
 	color: #333;
 	display: flex;
+	justify-content: center;
 	min-height: 100vh;
 }
 
@@ -26,8 +28,7 @@ h5 {
 	flex-direction: row;
 	width: 100%;
 	max-width: 1200px;
-	margin: 0 auto;
-	padding: 20px;
+	margin: 20px;
 	gap: 20px;
 }
 
@@ -45,8 +46,8 @@ h5 {
 
 .side-panel {
 	flex: 1;
-	overflow-y: auto;
-	max-height: calc(100vh - 40px);
+	/* Removed overflow-y and fixed max-height to allow full-height display */
+	/* It will now stretch to fit its content by default */
 }
 
 /* Header */
@@ -224,9 +225,64 @@ select:focus {
 @media (max-width: 900px) {
 	.wrapper {
 		flex-direction: column;
+		margin: 10px;
 	}
 
-	.side-panel {
-		max-height: none;
+	.header h2 {
+		font-size: 1.6rem;
 	}
+
+	.result h3 {
+		font-size: 1.3rem;
+	}
+}
+
+@media (max-width: 600px) {
+	body {
+		padding: 5px;
+	}
+
+	.wrapper {
+		gap: 10px;
+		margin: 5px;
+	}
+
+	.container,
+	.side-panel {
+		padding: 15px;
+	}
+
+	label {
+		font-size: 0.9rem;
+	}
+
+	input[type="text"],
+	input[type="number"],
+	select,
+	.submit-btn {
+		font-size: 0.9rem;
+		padding: 8px;
+	}
+
+	.submit-btn {
+		padding: 10px;
+	}
+
+	.step-number {
+		width: 60px;
+		font-size: 0.9rem;
+	}
+
+	.frame-box {
+		padding: 8px;
+		width: 35px;
+		font-size: 0.8rem;
+	}
+
+	.explanation {
+		font-size: 0.85rem;
+		margin-left: 5px;
+	}
+
+	/* Reduce any additional margins if needed */
 }
