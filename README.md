@@ -34,7 +34,7 @@ Modern operating systems use virtual memory to extend the apparent amount of phy
 **Full Explanation Panel:** A dedicated side panel explains each algorithm in-depth, includes pros and cons, and provides a practical analogy.
 **Lightweight & Standalone:** Built using pure HTML, CSS, and JavaScript—no additional dependencies required.
 ## Demo
-- Check out the live demo of the Page Replacement Simulator on GitHub Pages: pra.vibhav-y.com 
+- Check out the live demo of the Page Replacement Simulator on GitHub Pages: [https://www.pra.vibhav-y.com/]
 ## Usage
 Once the project is running in your browser, use the following steps:
 1. **Input Reference String:**
